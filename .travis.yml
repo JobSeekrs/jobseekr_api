@@ -1,0 +1,10 @@
+language: node_js
+node_js: node
+install: 
+  - npm
+script:
+  - yarn build:client
+  - yarn lint
+  - yarn start:server &
+  - sleep 10
+  - yarn test
