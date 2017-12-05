@@ -2,8 +2,11 @@
 /node_modules
 
 # misc
-.DS_Store
-.env
+*/.DS_Store
+/.env
 
+# build
+/dist
+
+# log
 npm-debug.log*
-package-lock.json
