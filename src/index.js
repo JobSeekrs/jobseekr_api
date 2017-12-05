@@ -5,10 +5,9 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 const app = express();
-
-app.use(express.static(path.join(__dirname, '/../client/public/'), bodyparser()));
-
 const port = process.env.PORT;
+
+app.use(bodyparser.json());
 
 app.listen(port, () => {
   console.log(`rest-server listening on port ${port}`);
