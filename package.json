@@ -4,17 +4,12 @@
   "description": "��#\u0000 \u0000j\u0000o\u0000b\u0000s\u0000e\u0000e\u0000k\u0000r\u0000_\u0000a\u0000p\u0000i\u0000\r\u0000 \u0000",
   "main": "index.js",
   "scripts": {
-<<<<<<< HEAD
     "start": "nodemon src --exec babel-node",
     "build": "babel src -d dist",
     "wipe-db": "mysql -u root < src/database/init/schema.sql",
     "server": "node dist",
     "test": "jest --coverage",
     "lint": "eslint ./server/src --ext .jsx; eslint ./server/src --ext .js"
-=======
-    "test": "jest",
-    "start": "nodemon ./server/src/index.js --exec babel-node --presets es2015,stage-2"
->>>>>>> set up controller and router for github api for search
   },
   "repository": {
     "type": "git",
