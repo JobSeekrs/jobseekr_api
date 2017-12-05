@@ -4,8 +4,11 @@
   "description": "��#\u0000 \u0000j\u0000o\u0000b\u0000s\u0000e\u0000e\u0000k\u0000r\u0000_\u0000a\u0000p\u0000i\u0000\r\u0000 \u0000",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon src --exec babel-node",
+    "build": "babel src -d dist",
+    "wipe-db": "mysql -u root < src/database/init/schema.sql",
+    "server": "node dist",
     "test": "jest --coverage",
-    "start": "nodemon ./server/src/index.js --exec babel-node --presets es2015,stage-2",
     "lint": "eslint ./server/src --ext .jsx; eslint ./server/src --ext .js"
   },
   "repository": {
@@ -21,21 +24,14 @@
   "dependencies": {
     "axios": "^0.17.1",
     "body-parser": "^1.18.2",
-    "cors": "^2.8.4",
     "dotenv": "^4.0.0",
     "express": "^4.16.2",
     "mysql2": "^1.5.1",
     "sequelize": "^4.23.4"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.3",
-    "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1",
     "eslint": "^4.12.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.8.0",
@@ -44,7 +40,6 @@
     "jest": "^21.2.1",
     "nodemon": "^1.12.1",
     "superagent": "^3.8.1",
-    "supertest": "^3.0.0",
-    "webpack": "^3.9.1"
+    "supertest": "^3.0.0"
   }
 }
