@@ -6,6 +6,7 @@
   "scripts": {
     "start": "nodemon src --exec babel-node",
     "build": "babel src -d dist",
+    "wipe-db": "mysql -u root < src/database/init/schema.sql",
     "server": "node dist",
     "test": "jest --coverage",
     "lint": "eslint ./server/src --ext .jsx; eslint ./server/src --ext .js"
