@@ -4,8 +4,6 @@ import dotenv from 'dotenv';
 import Router from './router/index';
 import { initializeDb } from './database';
 
-
-
 dotenv.config();
 const app = express();
 const port = process.env.PORT;
