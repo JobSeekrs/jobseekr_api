@@ -1,5 +1,3 @@
-
-DROP DATABASE IF EXISTS Jobtracker;
 CREATE DATABASE Jobtracker;
 USE Jobtracker;
 
@@ -37,7 +35,7 @@ CREATE TABLE `Contact` (
 	`userId` INT NOT NULL,
 	`companyId` INT,
 	`firstName` VARCHAR(255) NOT NULL,
-	`lastName` BINARY NOT NULL,
+	`lastName` VARCHAR(255) NOT NULL,
 	`title` VARCHAR(255),
 	`notes` TEXT,
 	`email` VARCHAR(255),
@@ -97,4 +95,3 @@ ALTER TABLE `Event` ADD CONSTRAINT `Event_fk0` FOREIGN KEY (`jobId`) REFERENCES 
 ALTER TABLE `Event` ADD CONSTRAINT `Event_fk1` FOREIGN KEY (`contactId`) REFERENCES `Contact`(`id`);
 
 ALTER TABLE `Resource` ADD CONSTRAINT `Resource_fk0` FOREIGN KEY (`eventId`) REFERENCES `Event`(`id`);
-
