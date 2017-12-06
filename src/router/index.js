@@ -1,5 +1,9 @@
-import { router } from 'express';
-import controller from './../controller';
+import express from 'express';
+import controller from '../controller/index';
+const Router = express.Router();
+
+Router.post('/github', controller.github);
+
 
 // router.get('/company', controller.company.get);
 // router.post('/company', controller.company.post);
@@ -20,3 +24,5 @@ import controller from './../controller';
 // router.post('/user', controller.user.post);
 
 export default router;
+
+
