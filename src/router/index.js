@@ -1,9 +1,9 @@
 import express from 'express';
 import controller from '../controller';
+
 const Router = express.Router();
 
 Router.post('/github', controller.github);
-
 
 // router.get('/company', controller.company.get);
 // router.post('/company', controller.company.post);
@@ -24,3 +24,4 @@ Router.post('/github', controller.github);
 // router.post('/user', controller.user.post);
 
 export default Router;
+

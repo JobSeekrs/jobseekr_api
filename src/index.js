@@ -4,9 +4,10 @@ import dotenv from 'dotenv';
 import Router from './router/index';
 import { initializeDb } from './database';
 
-dotenv.config();
+
+// dotenv.config();
 const app = express();
-const port = process.env.PORT;
+// const port = process.env.PORT;
 
 app.use(bodyparser.json());
 app.use(function(req, res, next) {
@@ -16,9 +17,13 @@ app.use(function(req, res, next) {
 });
 app.use('/', Router);
 
+// app.listen(port, () => {
+//   console.log(`rest-server listening on port ${port}`);
+// });
 
-app.listen(port, () => {
-  console.log(`rest-server listening on port ${port}`);
+
+app.listen(3100, () => {
+  console.log('rest-server listening to port 3100');
 });
 
 initializeDb((err) => {
