@@ -2,6 +2,8 @@ import express from 'express';
 import bodyparser from 'body-parser';
 import dotenv from 'dotenv';
 import Router from './router/index';
+import { initializeDb } from './database';
+
 
 // dotenv.config();
 const app = express();
@@ -15,13 +17,21 @@ app.use(function(req, res, next) {
 });
 app.use('/', Router);
 
-
 // app.listen(port, () => {
 //   console.log(`rest-server listening on port ${port}`);
 // });
 
+
 app.listen(3100, () => {
   console.log('rest-server listening to port 3100');
+});
+
+initializeDb((err) => {
+  if (err) {
+    console.error('Error initializing DB:', err);
+  } else {
+    console.log('Database initialized');
+  }
 });
 
 module.exports = app;
