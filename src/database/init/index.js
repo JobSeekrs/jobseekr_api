@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs';
-import { db } from './../';
+import { database } from './../';
 import users from './seed/user.json';
 import companies from './seed/company.json';
 import jobs from './seed/job.json';
@@ -18,7 +18,7 @@ export const createDb = (callback) => {
       .map(line => line.trim());
     schema.forEach((sql) => {
       if (sql) {
-        db.query(sql, (err) => {
+        database.query(sql, (err) => {
           if (err) {
             throw err;
           }
@@ -33,7 +33,7 @@ export const createDb = (callback) => {
 
 const insert = (table, cols, data) => {
   const sql = `INSERT INTO ${table} (${cols}) VALUES ?;`;
-  db.query(sql, [data], (err) => {
+  database.query(sql, [data], (err) => {
     if (err) throw err;
   });
 };
@@ -41,7 +41,7 @@ const insert = (table, cols, data) => {
 export const seedDb = (callback) => {
   console.log('Checking for data in DB...');
   try {
-    db.query('select count(*) as count from user', (err, msg) => {
+    database.query('select count(*) as count from user', (err, msg) => {
       if (msg[0].count === 0) {
         console.log('No data in DB, seeding data...');
         insert('User', users.cols.join(','), users.data);
