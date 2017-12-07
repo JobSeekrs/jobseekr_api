@@ -1,8 +1,8 @@
-import express from 'express';
-const Router = express.Router();
-import controller from '../controllers/index';
+// import express from 'express';
+// const Router = express.Router();
+// import controller from '../controllers/index';
 
-Router.post('/github', controller.github);
+// Router.post('/github', controller.github);
 
-module.exports = Router;
+// module.exports = Router;
 

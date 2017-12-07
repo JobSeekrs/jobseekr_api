@@ -1,7 +1,7 @@
 import mysql from 'mysql2';
 import { createDb, seedDb } from './init';
 
-export let db;
+export let database;
 
 export const initializeDb = (callback) => {
   const noDbMsg = `Unknown database '${process.env.DB_NAME.toLowerCase()}'`;
@@ -17,8 +17,8 @@ export const initializeDb = (callback) => {
         throw err;
       } else {
         console.log('MySql connected');
-        db = connection;
-        db.query(`USE ${process.env.DB_NAME}`, (err) => {
+        database = connection;
+        database.query(`USE ${process.env.DB_NAME}`, (err) => {
           if (err) {
             if (err.sqlMessage !== noDbMsg) {
               throw err;
