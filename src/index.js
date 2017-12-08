@@ -6,12 +6,16 @@ import path from 'path';
 import Router from './router/index';
 import { initializeDb } from './database';
 
+<<<<<<< HEAD
 export const log = logger.log;
 export const debug = logger.debug;
 export const app = express();
 
 dotenv.config();
 const port = process.env.PORT;
+=======
+const app = express();
+>>>>>>> [add]
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
