@@ -1,4 +1,5 @@
 import { log, debug } from '../../'
+import request from 'request';
 
 export default {
   post: (req, res) => {
