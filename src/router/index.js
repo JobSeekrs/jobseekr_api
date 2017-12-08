@@ -3,7 +3,7 @@ import controller from '../controller';
 
 const router = express.Router();
 
-router.post('/github', controller.github);
+router.post('/github', controller.github.post);
 
 router.get('/company', controller.company.get);
 // router.post('/company', controller.company.post);
