@@ -18,16 +18,22 @@ app.use('/', Router);
 
 dotenv.config();
 const port = process.env.PORT;
-app.listen(port, () => {
-  console.log(`rest-server listening on port ${port}`);
-});
 
-initializeDb((err) => {
-  if (err) {
-    console.error('Error initializing DB:', err);
+console.log(`\n- Starting API server...`);
+app.listen(port, (err) => {
+  if(err) {
+    console.error('** FATAL: Error starting Express Server **');
   } else {
-    console.log('Database initialized');
+    console.log(`  ...Express serving port ${port}\n`);
+    initializeDb(err => {
+      if (err) {
+        console.error('** FATAL: Error initializing DB:', err);
+      } else {
+        console.log('---System Online---\n');
+      }
+    });
   }
 });
+
 
 module.exports = app;

@@ -1,9 +1,10 @@
 import mysql from 'mysql2';
 import { createDb, seedDb } from './init';
 
-export let database;
+export let db;
 
 export const initializeDb = (callback) => {
+  //Do not alter this constant
   const noDbMsg = `Unknown database '${process.env.DB_NAME.toLowerCase()}'`;
 
   try {
@@ -12,36 +13,44 @@ export const initializeDb = (callback) => {
       user: process.env.DB_USER,
       multipleStatements: true,
     });
+    console.log('- Connecting to DBMS...');
     connection.connect((err) => {
       if (err) {
         throw err;
       } else {
-        console.log('MySql connected');
-        database = connection;
-        database.query(`USE ${process.env.DB_NAME}`, (err) => {
+        
+        console.log('  ...MySql connected\n');
+        db = connection;
+        console.log(`- Checking for DB...`);
+        db.query(`USE ${process.env.DB_NAME}`, (err) => {
           if (err) {
             if (err.sqlMessage !== noDbMsg) {
               throw err;
             } else {
-              console.log('No DB, creating...');
+              console.log('  ...No DB found, creating...');
               createDb((err) => {
                 if (err) {
                   throw err;
                 } else {
-                  console.log('DB created');
+                  console.log(`  ...${process.env.DB_NAME} DB created\n`);
                   seedDb((err) => {
                     if (err) {
                       throw err;
+                    } else {
+                      callback();
                     }
                   });
                 }
               });
             }
           } else {
-            console.log('DB found');
+            
+            console.log(`  ...${process.env.DB_NAME} DB found\n`);
             seedDb((err) => {
               if (err) {
                 throw err;
+              } else {
+                callback();
               }
             });
           }

@@ -1,4 +1,4 @@
-import { database } from './../';
+import { db } from './../';
 import company from './model/company'
 import contact from './model/contact'
 import event from './model/event'
@@ -7,7 +7,7 @@ import user from './model/user'
 import resource from './model/resource'
 
 const model = {
-  database: database,
+  db: db,
   company: company,
   contact: contact,
   event: event,
