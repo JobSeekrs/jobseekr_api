@@ -4,7 +4,10 @@ import dotenv from 'dotenv';
 import path from 'path';
 import Router from './router/index';
 import { initializeDb } from './database';
+import helper from './helper';
 
+global.log = helper.logger.log;
+global.debug = helper.logger.debug;
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -19,17 +22,18 @@ app.use('/', Router);
 dotenv.config();
 const port = process.env.PORT;
 
-console.log(`\n- Starting API server...`);
+log();
+log(`- Starting API server...`);
 app.listen(port, (err) => {
   if(err) {
-    console.error('** FATAL: Error starting Express Server **');
+    log('** FATAL: Error starting Express Server **');
   } else {
-    console.log(`  ...Express serving port ${port}\n`);
+    log(`  ...Express serving port ${port}\n`);
     initializeDb(err => {
       if (err) {
-        console.error('** FATAL: Error initializing DB:', err);
+        log('** FATAL: Error initializing DB:', err);
       } else {
-        console.log('---System Online---\n');
+        log('---System Online---\n');
       }
     });
   }

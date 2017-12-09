@@ -39,20 +39,20 @@ const insert = (table, cols, data) => {
 };
 
 export const seedDb = (callback) => {
-  console.log('- Checking for data...');
+  log('- Checking for data...');
   try {
     db.query('select count(*) as count from user', (err, msg) => {
       if (msg[0].count === 0) {
-        console.log('  ...No data found, seeding DB...');
+        log('  ...No data found, seeding DB...');
         insert('User', users.cols.join(','), users.data);
         insert('Company', companies.cols.join(','), companies.data);
         insert('Job', jobs.cols.join(','), jobs.data);
         insert('Contact', contacts.cols.join(','), contacts.data);
         insert('Event', events.cols.join(','), events.data);
-        console.log('  ...DB seeded\n');
+        log('  ...DB seeded\n');
         callback();
       } else {
-        console.log('  ...Table data found\n');
+        log('  ...Table data found\n');
         callback();
       }
     }); 

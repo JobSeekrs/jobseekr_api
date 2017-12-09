@@ -17,14 +17,15 @@ export default {
   },
 
   generateJWT: ({ id: id, emailLogin: emailLogin }) => {
-    const token = {};
+    const milliscondsToHours = 3.6e+6;
     const sessionHours = 1;
+    const token = {};
 
     token.accessToken = jwt.sign(
       {
         id: id,
         emailLogin: emailLogin,
-        exp: Date.now() + (3.6e+6).toFixed() * sessionHours
+        exp: Date.now() + milliscondsToHours.toFixed() * sessionHours
       }, 
       process.env.JWT_SECRET
     );
