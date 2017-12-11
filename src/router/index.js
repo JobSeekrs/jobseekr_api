@@ -1,27 +1,53 @@
 import express from 'express';
 import controller from '../controller';
+import { validateJWT } from '../helper/authentication.js';
 
 const router = express.Router();
 
-router.post('/github', controller.github.post);
+router.route('/signup')
+  .post(controller.user.signup);
 
-router.get('/company', controller.company.get);
-// router.post('/company', controller.company.post);
+router.route('/login')
+  .post(controller.user.login);
 
-router.get('/contact', controller.contact.get);
-// router.post('/contact', controller.contact.post);
+  router.route('/user')
+  .get(controller.user.get);
+  // .post()
+  // .put()
+  // .delete();
 
-router.get('/event', controller.event.get);
-// router.post('/event', controller.event.post);
+router.route('/company')
+  .get(controller.company.get);
+//   .post()
+//   .put()
+//   .delete();
 
-router.get('/job', controller.job.get);
-// router.post('/job', controller.job.post);
+router.route('/contact')
+  .get(controller.contact.get)
+//   .post()
+//   .put()
+//   .delete();
 
-router.get('/resource', controller.resource.get);
-// router.post('/resource', controller.resource.post);
+router.route('/job')
+  .get(controller.job.get);
+//   .post() 
+//   .put()
+//   .delete();
 
-router.get('/user', controller.user.get);
-// router.post('/user', controller.user.post);
+router.route('/event')
+  .get(controller.event.get);
+//   .post()
+//   .put()
+//   .delete();
+
+router.route('/resource')
+  .get(controller.resource.get);
+//   .post()
+//   .put()
+//   .delete();
+
+router.route('/github')
+  .post(controller.github.post);
 
 export default router;
 

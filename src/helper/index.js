@@ -1,5 +1,7 @@
-import auth from './authentication'
+import authentication from './authentication'
+import logger from './logger'
 
 export default {
-  auth: auth
+  authentication: authentication,
+  logger: logger
 };

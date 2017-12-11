@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs';
-import { database } from './../';
+import { db } from './../';
 import users from './seed/user.json';
 import companies from './seed/company.json';
 import jobs from './seed/job.json';
@@ -18,7 +18,7 @@ export const createDb = (callback) => {
       .map(line => line.trim());
     schema.forEach((sql) => {
       if (sql) {
-        database.query(sql, (err) => {
+        db.query(sql, (err) => {
           if (err) {
             throw err;
           }
@@ -33,28 +33,29 @@ export const createDb = (callback) => {
 
 const insert = (table, cols, data) => {
   const sql = `INSERT INTO ${table} (${cols}) VALUES ?;`;
-  database.query(sql, [data], (err) => {
+  db.query(sql, [data], (err) => {
     if (err) throw err;
   });
 };
 
 export const seedDb = (callback) => {
-  console.log('Checking for data in DB...');
+  log('- Checking for data...');
   try {
-    database.query('select count(*) as count from user', (err, msg) => {
+    db.query('select count(*) as count from user', (err, msg) => {
       if (msg[0].count === 0) {
-        console.log('No data in DB, seeding data...');
+        log('  ...No data found, seeding DB...');
         insert('User', users.cols.join(','), users.data);
         insert('Company', companies.cols.join(','), companies.data);
         insert('Job', jobs.cols.join(','), jobs.data);
         insert('Contact', contacts.cols.join(','), contacts.data);
         insert('Event', events.cols.join(','), events.data);
-        console.log('DB seeded, system online');
+        log('  ...DB seeded\n');
+        callback();
       } else {
-        console.log('Data found, system online');
+        log('  ...Table data found\n');
+        callback();
       }
-    });
-    callback();
+    }); 
   } catch (err) {
     callback(err);
   }
