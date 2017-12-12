@@ -1,4 +1,8 @@
+<<<<<<< HEAD:src/controller/external-api/github.js
 import { log, debug } from '../../'
+=======
+import request from 'request';
+>>>>>>> [fix]:src/controller/external/github.js
 
 export default {
   post: (req, res) => {

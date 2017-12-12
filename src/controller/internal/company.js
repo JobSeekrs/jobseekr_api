@@ -2,7 +2,7 @@ import data from './../';
 
 const TYPE = 'company';
 
-export default  {
+export default {
   get: (req, res) => {
     if (Object.keys(req.query).length === 0) {
       data.model[TYPE].getAll((err, data) => {
