@@ -80,6 +80,12 @@ router.route('/job')
   //   .put()
   //   .delete();
 
+router.route('/dashboard')
+  .get(controller.dashboard.get);
+//   .post() 
+//   .put()
+//   .delete();
+
 router.route('/event')
   .get(controller.event.get)
   //   .post()
