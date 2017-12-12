@@ -1,4 +1,5 @@
-import { db } from './../';
+import { log, debug } from '../../'
+import { db } from '../';
 import company from './model/company'
 import contact from './model/contact'
 import event from './model/event'

@@ -1,5 +1,6 @@
-import db from './../';
-import helper from './../../helper/';
+import { log, debug } from '../../'
+import db from '../';
+import auth from '../../helper/authentication';
 
 const TYPE = 'user';
 
@@ -7,31 +8,33 @@ export default  {
   get: (req, res) => {
     if (Object.keys(req.query).length === 0) {
       db.model[TYPE].getAll((err, data) => {
-        res.status(200).send(JSON.stringify(data));
+        res.status(200).send(data);
       });
     } else if (req.query.id && Object.keys(req.query).length === 1) {
       db.model[TYPE].get(req.query.id,(err, data) => {
-        res.status(200).send(JSON.stringify(data));
+        res.status(200).send(data);
       });
     } else {
       db.model[TYPE].query(req.query, (err, data) => {
-        res.status(200).send(JSON.stringify(data));	
+        res.status(200).send(data);	
       });  
     };
   },
   login: (req, res) => {
     const emailLogin = req.body.emailLogin;
     const password = req.body.password;
-
+    
     db.model.user.query({emailLogin},(err, rows) => {
       if (!rows.length)	{
-        res.status(401).send('Invalid Login Email');
+        res.status(204).send('Invalid Login Email');
       } else {
-        helper.auth.isValidPw(password, rows[0].password, (err, isValid) => {
+        auth.isValidPw(password, rows[0].password, (err, isValid) => {
           if (isValid) {
-            res.status(200).send('Valid Login');
+            const userId = rows[0].id;
+            const token = auth.generateJWT({ userId, emailLogin });
+            return res.status(200).send(token);
           } else {
-            res.status(401).send('Invalid Login Password');
+            res.status(204).send('Invalid Login Password');
           }
         });
       }
@@ -43,7 +46,7 @@ export default  {
       if (rows.length)	{
         res.status(401).send('Email Login already exists');
       } else {
-        helper.auth.encryptPw(req.body.password, (err, pwHash) => {
+        auth.encryptPw(req.body.password, (err, pwHash) => {
 
           const user = {
             firstName: req.body.firstName,

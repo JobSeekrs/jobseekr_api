@@ -1,3 +1,5 @@
+import { log, debug } from '../../../'
+
 export default {
   where: (queryString) => {
     let pairs = [];
