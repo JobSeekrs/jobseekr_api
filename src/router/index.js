@@ -6,7 +6,6 @@ import authentication from '../helper/authentication';
 const router = express.Router();
 const validateJWT = authentication.validateJWT;
 
-
 // debug('FUNCTION', authentication.validateJWT)
 
 router.route('/signup')
