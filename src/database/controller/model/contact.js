@@ -1,5 +1,6 @@
-import { db } from './../../';
-import helper from './../helper';
+import { log, debug } from '../../../'
+import { db } from '../../';
+import helper from '../helper';
 
 const TABLE = 'contact';
 

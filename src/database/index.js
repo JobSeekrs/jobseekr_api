@@ -1,6 +1,6 @@
+import { log, debug } from '../'
 import mysql from 'mysql2';
 import { createDb, seedDb } from './init';
-
 export let db;
 
 export const initializeDb = (callback) => {

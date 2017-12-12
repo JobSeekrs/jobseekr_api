@@ -1,15 +1,20 @@
+import logger from './helper/logger';
 import express from 'express';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import path from 'path';
 import Router from './router/index';
 import { initializeDb } from './database';
-import helper from './helper';
 
-global.log = helper.logger.log;
-global.debug = helper.logger.debug;
 
-const app = express();
+
+export const log = logger.log;
+export const debug = logger.debug;
+export const app = express();
+
+dotenv.config();
+const port = process.env.PORT;
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(function(req, res, next) {
@@ -19,10 +24,7 @@ app.use(function(req, res, next) {
 });
 app.use('/', Router);
 
-dotenv.config();
-const port = process.env.PORT;
-
-log();
+log('-------------------------------');
 log(`- Starting API server...`);
 app.listen(port, (err) => {
   if(err) {
@@ -33,11 +35,10 @@ app.listen(port, (err) => {
       if (err) {
         log('** FATAL: Error initializing DB:', err);
       } else {
-        log('---System Online---\n');
+        log('   -- SYSTEM ONLINE --');
+        log('-------------------------------');
       }
     });
   }
 });
 
-
-module.exports = app;

@@ -1,6 +1,7 @@
+import { log, debug } from '../../'
 import path from 'path';
 import fs from 'fs';
-import { db } from './../';
+import { db } from '../';
 import users from './seed/user.json';
 import companies from './seed/company.json';
 import jobs from './seed/job.json';

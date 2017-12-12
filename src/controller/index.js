@@ -1,5 +1,6 @@
+import { log, debug } from '../'
 import request from 'request';
-import db from './../database/controller';
+import db from '../database/controller';
 import company from './local/company';
 import contact from './local/contact';
 import event from './local/event';

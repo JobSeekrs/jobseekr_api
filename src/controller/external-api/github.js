@@ -1,3 +1,5 @@
+import { log, debug } from '../../'
+
 export default {
   post: (req, res) => {
     console.log(req.body.searched);
