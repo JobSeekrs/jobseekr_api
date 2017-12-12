@@ -6,8 +6,6 @@ import path from 'path';
 import Router from './router/index';
 import { initializeDb } from './database';
 
-
-
 export const log = logger.log;
 export const debug = logger.debug;
 export const app = express();
@@ -22,6 +20,7 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+
 app.use('/', Router);
 
 log('-------------------------------');

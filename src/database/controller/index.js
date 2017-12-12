@@ -16,4 +16,5 @@ const model = {
   resource: resource,
   user: user,
 }
+
 export default model;
