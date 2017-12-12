@@ -2,7 +2,7 @@ import { log, debug } from '../../../'
 import { db } from '../../';
 import helper from '../helper';
 
-const TABLE = 'company';
+const TABLE = 'Company';
 
 export default {
   getAll: (callback) => {
