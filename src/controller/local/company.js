@@ -21,7 +21,7 @@ export default  {
     };
   },
   post: (req, res) => {
-    data.model[TYPE].post(req.body, (err, result) => {
+    db.model[TYPE].post(req.body, (err, result) => {
       if (err) {
         console.log(err);
       }

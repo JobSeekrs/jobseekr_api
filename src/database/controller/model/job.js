@@ -25,12 +25,13 @@ export default {
     }); 
   },
   post: (data, callback) => {
-    console.log('in job post db', data);
-    const sql = "INSERT INTO job (companyId, name, description, notes, source, status, priority, deadline, link) VALUES (1, '" + data.jobTitle + "', '" + data.jobDescription + "', '" + data.jobNotes + "', '" + data.jobSource + "', '" + data.jobStatus + "', " + data.jobPriority + ", '" + data.jobDeadline.split('T').join(' ').split('.')[0] + "', '" + data.jobLink + "')";
-    console.log('in jobs db query', sql);
-    database.query(sql, (err, results) => {
-      console.log('in db job', results);
-      callback(err, results);
-    });
+    data.jobs.map((job, i) => {
+      const subsquery = `SELECT id from company where name = '${job.company.name}'`;
+      const sqll = "INSERT INTO job (companyId, name, description, city, state) VALUES ("+ subquery + ',' + job.company.name + "', '" + job.description + "', '" + job.company.location.city + "', '" + job.company.location.state + "')";
+      const sql = `INSERT INTO Job (companyId, name, description, city, state) VALUES ('${subquery}', '${job.company.name}', '${job.description}', '${job.company.location.city}', '${job.company.location.state}')`;
+      db.query(sql, (err, results) => {
+        callback(err, results);
+      });
+    })
   },
 };

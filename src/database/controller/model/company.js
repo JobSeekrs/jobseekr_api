@@ -2,7 +2,7 @@ import { log, debug } from '../../../'
 import { db } from '../../';
 import helper from '../helper';
 
-const TABLE = 'company';
+const TABLE = 'Company';
 
 export default {
   getAll: (callback) => {
@@ -25,11 +25,12 @@ export default {
     }); 
   },
   post: (data, callback) => {
-    console.log('in company post db', data);
-    const sql = "INSERT INTO company (userId, name, description, notes, phone, address1, address2, city, state, zip) VALUES (1, '" + data.companyName + "', '" + data.companyDescription + "', 'na', '" + data.companyPhone + "', '" + data.companyAddress1 + "', '" + data.companyAddress2 + "', '" + data.companyCity + "', '" + data.companyState + "', '" + data.companyZip + "')";
-    database.query(sql, (err, results) => {
-      console.log('in db company', results);
-      callback(err, results);
-    });
+    console.log('this is jobs', typeof data.jobs[0].company.name);
+    data.jobs.map((job, i) => {
+      const sql = `INSERT INTO ${TABLE} (userId, name, description, city, state) VALUES (1, '${job.company.name}', '${job.description}', '${job.company.location.city}', '${job.company.location.state}')`
+      db.query(sql, (err, results) => {
+        callback(err, results);
+      });
+    })
   },
 };

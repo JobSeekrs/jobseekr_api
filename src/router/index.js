@@ -25,8 +25,13 @@ router.route('/user')
   // .delete();
 
 router.route('/company')
+<<<<<<< HEAD
   .get(validateJWT, controller.company.get);
 //   .post()
+=======
+  .get(controller.company.get)
+  .post(controller.company.post);
+>>>>>>> working on post requests
 //   .put()
 //   .delete();
 
@@ -37,8 +42,13 @@ router.route('/contact')
 //   .delete();
 
 router.route('/job')
+<<<<<<< HEAD
   .get(validateJWT, controller.job.get);
 //   .post() 
+=======
+  .get(controller.job.get)
+  .post(controller.job.post); 
+>>>>>>> working on post requests
 //   .put()
 //   .delete();
 
