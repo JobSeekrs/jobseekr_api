@@ -1,4 +1,4 @@
-import { log, debug } from '../../';
+import { log, debug } from '../../'
 import request from 'request';
 
 export default {
