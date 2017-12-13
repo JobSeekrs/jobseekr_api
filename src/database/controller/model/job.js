@@ -33,4 +33,22 @@ export default {
       callback(err, results);
     });
   },
+  searchPost: (data, callback) => {
+    data.jobs.map((job, i) => {
+      job.description = JSON.stringify(job.description.replace(/<(?:.|\n)*?>/gm, ''));
+      const subquery = `SELECT id FROM Company WHERE name = '${job.company.name}'`;
+      const check =  `SELECT * FROM Job WHERE name = '${job.title}'`
+      const sql = `INSERT INTO Job (companyId, name, description, priority, source, status, link) VALUES ((${subquery}), '${job.title}', ${job.description}, 3, 'Search', 'Will Apply', '${job.apply_url}')`;
+      db.query(check, (err, results) => {
+        if (results.length === 0) {
+          db.query(sql, (err, results) => {
+            console.log('posting job in db', job.title);
+          })
+        } else {
+          console.log('not posting job in db', job.title);
+        }
+      });
+    })
+    callback('finished')
+  },
 };

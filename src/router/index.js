@@ -28,6 +28,9 @@ router.route('/company')
 //   .put()
 //   .delete();
 
+router.route('/company/search')
+.post(controller.company.searchPost);
+
 router.route('/contact')
   .get(validateJWT, controller.contact.get)
   .post(validateJWT, controller.contact.post);
@@ -45,6 +48,8 @@ router.route('/dashboard')
 //   .post()
 //   .put()
 //   .delete();
+router.route('/job/search')
+.post(controller.job.searchPost);
 
 router.route('/event')
   .get(validateJWT, controller.event.get)

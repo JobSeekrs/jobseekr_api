@@ -32,4 +32,20 @@ export default {
       callback(err, results);
     });
   },
+  searchPost: (data, callback) => {
+    data.jobs.map((job, i) => {
+      const check = `SELECT * from company where name = '${job.company.name}'`
+      const sql = `INSERT INTO ${TABLE} (userId, name, city, state) VALUES (1, '${job.company.name}', '${job.company.location.city}', '${job.company.location.state}')`
+      db.query(check, (err, results) => {
+        if (results.length === 0) {
+          db.query(sql, (err, results) => {
+            console.log('posting in db');
+          })
+        } else {
+          console.log('not posting in db');
+        }
+      })
+    })
+    callback('finished');
+  },
 };
