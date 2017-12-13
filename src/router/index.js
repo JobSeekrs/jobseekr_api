@@ -4,62 +4,110 @@ import controller from '../controller';
 import authentication from '../helper/authentication';
 
 const router = express.Router();
-const validateJWT = authentication.validateJWT;
+// const validateJWT = authentication.validateJWT;
 
 
 // debug('FUNCTION', authentication.validateJWT)
 
+// router.route('/signup')
+//   .post(controller.user.signup);
+
+// router.route('/login')
+//   .post(controller.user.login);
+
+// router.route('/github')
+//   .post(validateJWT, controller.github.post);
+
+// router.route('/user')
+//   .get(validateJWT, controller.user.get);
+//   // .post()
+//   // .put()
+//   // .delete();
+
+// router.route('/company')
+//   .get(validateJWT, controller.company.get)
+// //   .post()
+//   .get(controller.company.get)
+//   .post(controller.company.post);
+// //   .put()
+// //   .delete();
+
+// router.route('/contact')
+//   .get(validateJWT, controller.contact.get)
+// //   .post()
+// //   .put()
+// //   .delete();
+
+// router.route('/job')
+//   .get(validateJWT, controller.job.get)
+// //   .post() 
+//   .get(controller.job.get)
+//   .post(controller.job.post); 
+// //   .put()
+// //   .delete();
+
+// router.route('/event')
+//   .get(validateJWT, controller.event.get);
+// //   .post()
+// //   .put()
+// //   .delete();
+
+// router.route('/resource')
+//   .get(validateJWT, controller.resource.get);
+// //   .post()
+// //   .put()
+// //   .delete();
+
 router.route('/signup')
-  .post(controller.user.signup);
+.post(controller.user.signup);
 
 router.route('/login')
-  .post(controller.user.login);
+.post(controller.user.login);
 
 router.route('/github')
-  .post(validateJWT, controller.github.post);
+.post(controller.github.post);
 
 router.route('/user')
-  .get(validateJWT, controller.user.get);
-  // .post()
-  // .put()
-  // .delete();
+.get(controller.user.get);
+// .post()
+// .put()
+// .delete();
 
 router.route('/company')
-<<<<<<< HEAD
-  .get(validateJWT, controller.company.get);
+.get(controller.company.get)
 //   .post()
-=======
-  .get(controller.company.get)
-  .post(controller.company.post);
->>>>>>> working on post requests
+.get(controller.company.get)
+.post(controller.company.post);
 //   .put()
 //   .delete();
 
+router.route('/company/search')
+.post(controller.company.searchPost);
+
 router.route('/contact')
-  .get(validateJWT, controller.contact.get)
+.get(controller.contact.get)
 //   .post()
 //   .put()
 //   .delete();
 
 router.route('/job')
-<<<<<<< HEAD
-  .get(validateJWT, controller.job.get);
+.get(controller.job.get)
 //   .post() 
-=======
-  .get(controller.job.get)
-  .post(controller.job.post); 
->>>>>>> working on post requests
+.get(controller.job.get)
+.post(controller.job.post); 
 //   .put()
 //   .delete();
+router.route('/job/search')
+.post(controller.job.searchPost);
 
 router.route('/event')
-  .get(validateJWT, controller.event.get);
+.get(controller.event.get);
 //   .post()
 //   .put()
 //   .delete();
 
 router.route('/resource')
-  .get(validateJWT, controller.resource.get);
+.get(controller.resource.get);
 //   .post()
 //   .put()
 //   .delete();
