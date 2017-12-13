@@ -19,11 +19,6 @@ export default {
   job: job,
   resource: resource,
   user: user,
-<<<<<<< HEAD
-  github: github
-};
-=======
   github: github,
   dashboard: dashboard,
 };
->>>>>>> home page dashboard DB query update
