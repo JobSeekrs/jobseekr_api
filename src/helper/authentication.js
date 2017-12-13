@@ -1,4 +1,4 @@
-import { log, debug } from '../'
+import { log, debug } from '../';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
@@ -8,7 +8,7 @@ auth.encryptPw = (password, callback) => {
   const saltRounds = 10
   bcrypt.genSalt(saltRounds, (err, salt) => {
     bcrypt.hash(password, salt, (err, hash) => {
-        callback(err, hash)
+      callback(err, hash)
     });
   });
 };
@@ -17,7 +17,7 @@ auth.encrypt = (data, callback) => {
   const saltRounds = 10
   bcrypt.genSalt(saltRounds, (err, salt) => {
     bcrypt.hash(password, salt, (err, hash) => {
-        callback(err, hash)
+      callback(err, hash)
     });
   });
 };

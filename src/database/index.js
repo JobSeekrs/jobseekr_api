@@ -1,4 +1,4 @@
-import { log, debug } from '../'
+import { log, debug } from '../';
 import mysql from 'mysql2';
 import { createDb, seedDb } from './init';
 export let db;
@@ -18,7 +18,6 @@ export const initializeDb = (callback) => {
       if (err) {
         throw err;
       } else {
-        
         log('  ...MySql connected\n');
         db = connection;
         log(`- Checking for DB...`);
@@ -44,7 +43,6 @@ export const initializeDb = (callback) => {
               });
             }
           } else {
-            
             log(`  ...${process.env.DB_NAME} DB found\n`);
             seedDb((err) => {
               if (err) {
