@@ -39,10 +39,10 @@ export default {
       db.query(check, (err, results) => {
         if (results.length === 0) {
           db.query(sql, (err, results) => {
-            console.log('posting in db');
+            console.log('posting company in db', job.company.name);
           })
         } else {
-          console.log('not posting in db');
+          console.log('not posting company in db', job.company.name);
         }
       })
     })

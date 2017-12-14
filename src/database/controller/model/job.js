@@ -37,12 +37,17 @@ export default {
     data.jobs.map((job, i) => {
       job.description = JSON.stringify(job.description.replace(/<(?:.|\n)*?>/gm, ''));
       const subquery = `SELECT id FROM Company WHERE name = '${job.company.name}'`;
+      const subquery2 = `SELECT id from Job WHERE name = '${job.title}'`
       const check =  `SELECT * FROM Job WHERE name = '${job.title}'`
       const sql = `INSERT INTO Job (userId, companyId, name, description, priority, source, status, link) VALUES (1, (${subquery}), '${job.title}', ${job.description}, 3, 'Search', 'Will Apply', '${job.apply_url}')`;
+      const sql2 = `INSERT INTO Event (jobId, name, type) VALUES ((${subquery2}), 'Created', 'Searched')`;
       db.query(check, (err, results) => {
         if (results.length === 0) {
           db.query(sql, (err, results) => {
             console.log('posting job in db', job.title);
+            db.query(sql2, (err, results) => {
+              console.log('posting into event', job.title);
+            })
           })
         } else {
           console.log('not posting job in db', job.title);
