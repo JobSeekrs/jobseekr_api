@@ -21,7 +21,7 @@ export default  {
   },
   post: (req, res) => {
     db.model[TYPE].post(req.body, (err, data) => {
-      res.status(200).send('contact info posted into DB');	
+      res.status(200).send(data);	
     });
   },
 };

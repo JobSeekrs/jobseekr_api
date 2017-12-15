@@ -26,7 +26,7 @@ export default {
   },
   post: (data, callback) => {
     console.log('in event post db', data);
-    const sql = "INSERT INTO event (jobId, name, type, timeStamp) VALUES (" + data.jobId + ", '" + data.eventName + "', '" + data.eventType + "', CURRENT_TIMESTAMP())";
+    const sql = "INSERT INTO event (jobId, contactId, name, type, timeStamp) VALUES (" + data.jobId + ", " + data.contactId + ", '" + data.eventName + "', '" + data.eventType + "', CURRENT_TIMESTAMP())";
     db.query(sql, (err, results) => {
       console.log('in db event', results);
       callback(err, results);

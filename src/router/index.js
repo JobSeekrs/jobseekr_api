@@ -1,4 +1,3 @@
-
 import express from 'express';
 import { log, debug } from '../';
 import auth from '../helper/authentication';
@@ -22,9 +21,10 @@ router.route('/user')
 // .post()
 // .put()
 // .delete();
-//   .get(validateJWT, controller.event.get)
 
 router.route('/company')
+  .get(validateJWT, controller.company.get)
+  .post(validateJWT, controller.company.post);
 //   .put()
 //   .delete();
 
