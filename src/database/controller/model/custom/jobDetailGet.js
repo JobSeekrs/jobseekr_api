@@ -1,6 +1,6 @@
-
--- JOB DETAIL GET
-SELECT 
+function jobDetailGet(id){ 
+return (    
+`SELECT 
     j.id as job_id, 
     j.description as job_description, 
     j.notes as job_notes, 
@@ -24,7 +24,7 @@ SELECT
     cont.email as contact_email,
     cont.phone as contact_phone,
     
-    comp.id, 
+    comp.id as company_id, 
     comp.name as company_name, 
     comp.description as company_description,
     comp.notes as company_notes,
@@ -35,12 +35,15 @@ SELECT
     comp.state as company_state,
     comp.zip as company_zip
 
-        FROM Job j
+    FROM Job j
     INNER JOIN Event e
         on j.id = e.jobId 
     INNER JOIN Contact cont
         on e.jobId = cont.id 
     INNER JOIN Company comp 
         on comp.id = cont.companyId
-    WHERE j.id = 104;
+    WHERE j.id = ${id};`
+    )
+}
 
+export default jobDetailGet;

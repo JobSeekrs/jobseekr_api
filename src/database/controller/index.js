@@ -7,6 +7,7 @@ import job from './model/job'
 import user from './model/user'
 import resource from './model/resource'
 import dashboard from './model/dashboard'
+import jobDetail from './model/jobDetail'
 
 const model = {
   db: db,
@@ -17,6 +18,7 @@ const model = {
   resource: resource,
   user: user,
   dashboard: dashboard,
+  jobDetail: jobDetail,
 }
 
 export default model;

@@ -1,5 +1,5 @@
 function dashboardGet() { 
-    return (`SELECT j.id, j.status, j.priority as rating, 
+return (`SELECT j.id, j.status, j.priority as rating, 
 CAST(j.deadline as DATE) as deadline, j.link as url, 
 j.name as job_title_name, c.name as company_name, 
 MIN(CAST(e.timeStamp as DATE)) as created_date FROM job j 
