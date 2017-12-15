@@ -1,4 +1,3 @@
-
 import express from 'express';
 import { log, debug } from '../';
 import auth from '../helper/authentication';
