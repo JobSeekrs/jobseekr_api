@@ -22,9 +22,10 @@ router.route('/user')
 // .post()
 // .put()
 // .delete();
-//   .get(validateJWT, controller.event.get)
 
 router.route('/company')
+  .get(validateJWT, controller.company.get)
+  .post(validateJWT, controller.company.post);
 //   .put()
 //   .delete();
 
