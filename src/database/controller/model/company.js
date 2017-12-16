@@ -36,8 +36,10 @@ export default {
     data.jobs.map((job, i) => {
       const check = `SELECT * from company where name = '${job.company.name}'`
       if (job.company.location === undefined) {
-        job.company.location.city = null;
-        job.company.location.state = null
+        job.company.location = {
+          city: null,
+          state: null,
+        };
       }
       const sql = `INSERT INTO ${TABLE} (userId, name, city, state) VALUES (1, '${job.company.name}', '${job.company.location.city}', '${job.company.location.state}')`
       db.query(check, (err, results) => {

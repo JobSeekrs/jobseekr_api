@@ -41,6 +41,7 @@ export default {
       const check =  `SELECT * FROM Job WHERE name = '${job.title}'`
       const sql = `INSERT INTO Job (companyId, name, description, priority, source, status, link) VALUES ((${subquery}), '${job.title}', ${job.description}, 3, 'Search', 'Will Apply', '${job.apply_url}')`;
       const sql2 = `INSERT INTO Event (jobId, name, timeStamp, type) VALUES ((${subquery2}), 'Created', CURRENT_TIMESTAMP(), 'Searched')`;
+      const sql3 = `INSERT INTO Contact (userId, companyId, firstName, lastName) VALUES (1, (${subquery}), 'N/A', 'N/A')`;
       db.query(check, (err, results) => {
         if (results.length === 0) {
           console.log('hitting')
@@ -48,13 +49,16 @@ export default {
             console.log('posting job in db', job.title);
             db.query(sql2, (err, results) => {
               console.log('posting into event', job.title);
-            })
-          })
+            });
+            db.query(sql3, (err, results) => {
+              console.log('posting into contact', job.title);
+            });
+          });
         } else {
           console.log('not posting job in db', job.title);
         }
       });
-    })
-    callback('finished')
+    });
+    callback('finished');
   },
 };
