@@ -6,8 +6,11 @@ import event from './model/event'
 import job from './model/job'
 import user from './model/user'
 import resource from './model/resource'
+
 import dashboard from './model/dashboard'
 import jobDetail from './model/jobDetail'
+import jobDetailsNotes from './model/custom/jobDetailsNotes/jobDetailsNotes'
+import jobDetailsEvents from './model/custom/jobDetailsNotes/jobDetailsEvents'
 
 const model = {
   db: db,
@@ -19,6 +22,8 @@ const model = {
   user: user,
   dashboard: dashboard,
   jobDetail: jobDetail,
+  jobDetailsNotes: jobDetailsNotes,
+  jobDetailsEvents: jobDetailsEvents,
 }
 
 export default model;
