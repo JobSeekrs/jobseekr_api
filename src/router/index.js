@@ -65,7 +65,7 @@ router.route('/resource')
 //   .delete();
 
 router.route('/jobDetail')
-  .get(controller.dashboard.get)
+  .post(controller.jobDetail.get)
 //   .post() 
 //   .put()
 //   .delete();
