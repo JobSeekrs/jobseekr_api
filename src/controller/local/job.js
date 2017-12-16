@@ -24,4 +24,12 @@ export default  {
       res.status(200).send(data);	
     });
   },
+  searchPost: (req, res) => {
+    db.model[TYPE].searchPost(req.body, (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      res.status(200).send('POSTED JOB FROM SEARCH INTO DB');
+    })
+  }
 };

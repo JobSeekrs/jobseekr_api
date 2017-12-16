@@ -26,7 +26,7 @@ export default {
   },
   post: (data, callback) => {
     console.log('in contact post db', data);
-    const sql = "INSERT INTO contact (userId, companyId, firstName, lastName, title, notes, email, phone) VALUES (1, " + data.companyId + ", '" + data.contactFirstName + "', '" + data.contactLastName + "', '" + data.contactTitle + "', 'na', '" + data.contactEmail + "', '" + data.contactPhone + "')";
+    const sql = "INSERT INTO contact (userId, companyId, firstName, lastName, title, notes, email, phone) VALUES (1, 1, '" + data.contactFirstName + "', '" + data.contactLastName + "', '" + data.contactTitle + "', 'na', '" + data.contactEmail + "', '" + data.contactPhone + "')";
     db.query(sql, (err, results) => {
       console.log('in db contact', results);
       callback(err, results);

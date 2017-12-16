@@ -2,7 +2,7 @@ import { log, debug } from '../../../'
 import { db } from '../../';
 import helper from '../helper';
 
-const TABLE = 'company';
+const TABLE = 'Company';
 
 export default {
   getAll: (callback) => {
@@ -31,5 +31,27 @@ export default {
       console.log('in db company', results);
       callback(err, results);
     });
+  },
+  searchPost: (data, callback) => {
+    data.jobs.map((job, i) => {
+      const check = `SELECT * from company where name = '${job.company.name}'`
+      if (job.company.location === undefined) {
+        job.company.location = {
+          city: null,
+          state: null,
+        };
+      }
+      const sql = `INSERT INTO ${TABLE} (userId, name, city, state) VALUES (1, '${job.company.name}', '${job.company.location.city}', '${job.company.location.state}')`
+      db.query(check, (err, results) => {
+        if (results.length === 0) {
+          db.query(sql, (err, results) => {
+            console.log('posting company in db', job.company.name);
+          })
+        } else {
+          console.log('not posting company in db', job.company.name);
+        }
+      })
+    })
+    callback('finished');
   },
 };

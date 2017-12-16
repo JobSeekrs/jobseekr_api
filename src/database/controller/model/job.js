@@ -26,11 +26,39 @@ export default {
   },
   post: (data, callback) => {
     console.log('in job post db', data);
-    const sql = "INSERT INTO job (companyId, name, description, notes, source, status, priority, deadline, link) VALUES (" + data.companyId + ", '" + data.jobTitle + "', '" + data.jobDescription + "', '" + data.jobNotes + "', '" + data.jobSource + "', '" + data.jobStatus + "', " + data.jobPriority + ", '" + data.jobDeadline.split('T').join(' ').split('.')[0] + "', '" + data.jobLink + "')";
+    const sql = "INSERT INTO job (companyId, name, description, notes, source, status, priority, deadline, link) VALUES (1, '" + data.jobTitle + "', '" + data.jobDescription + "', '" + data.jobNotes + "', '" + data.jobSource + "', '" + data.jobStatus + "', " + data.jobPriority + ", '" + data.jobDeadline.split('T').join(' ').split('.')[0] + "', '" + data.jobLink + "')";
     console.log('in jobs db query', sql);
     db.query(sql, (err, results) => {
       console.log('in db job', results);
       callback(err, results);
     });
+  },
+  searchPost: (data, callback) => {
+    data.jobs.map((job, i) => {
+      job.description = JSON.stringify(job.description.replace(/<(?:.|\n)*?>/gm, ''));
+      const subquery = `SELECT id FROM Company WHERE name = '${job.company.name}'`;
+      const subquery2 = `SELECT id from Job WHERE name = '${job.title}'`
+      const check =  `SELECT * FROM Job WHERE name = '${job.title}'`
+      const sql = `INSERT INTO Job (companyId, name, description, priority, source, status, link) VALUES ((${subquery}), '${job.title}', ${job.description}, 3, 'Search', 'Will Apply', '${job.apply_url}')`;
+      const sql2 = `INSERT INTO Event (jobId, name, timeStamp, type) VALUES ((${subquery2}), 'Created', CURRENT_TIMESTAMP(), 'Searched')`;
+      const sql3 = `INSERT INTO Contact (userId, companyId, firstName, lastName) VALUES (1, (${subquery}), 'N/A', 'N/A')`;
+      db.query(check, (err, results) => {
+        if (results.length === 0) {
+          console.log('hitting')
+          db.query(sql, (err, results) => {
+            console.log('posting job in db', job.title);
+            db.query(sql2, (err, results) => {
+              console.log('posting into event', job.title);
+            });
+            db.query(sql3, (err, results) => {
+              console.log('posting into contact', job.title);
+            });
+          });
+        } else {
+          console.log('not posting job in db', job.title);
+        }
+      });
+    });
+    callback('finished');
   },
 };
