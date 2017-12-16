@@ -1,9 +1,9 @@
 import { db } from './../../';
-import dashboardGet from './custom/dashboardGet';
+import jobDetailGet from './custom/jobDetailGet';
 
 export default {
-  get: (callback) => {
-    const sql = dashboardGet();
+  get: (data, callback) => {
+    const sql = jobDetailGet(data.jobId);
     db.query(sql, (err, data) => {
       console.log(sql);
       callback(err, data);

@@ -64,5 +64,11 @@ router.route('/resource')
 //   .put()
 //   .delete();
 
+router.route('/jobDetail')
+  .post(controller.jobDetail.get)
+//   .post() 
+//   .put()
+//   .delete();
+
 export default router;
 
