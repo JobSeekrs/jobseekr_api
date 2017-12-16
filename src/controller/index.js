@@ -9,6 +9,8 @@ import dashboard from './local/dashboard';
 import jobDetail from './local/jobDetail';
 import resource from './local/resource';
 import user from './local/user';
+import jobDetailsNotes from './local/jobDetailsNotes/jobDetailsNotes';
+import jobDetailsEvents from './local/jobDetailsNotes/jobDetailsEvents';
 import github from './external-api/github.js';
 
 export default {
@@ -22,4 +24,6 @@ export default {
   github: github,
   dashboard: dashboard,
   jobDetail: jobDetail,
+  jobDetailsNotes: jobDetailsNotes,
+  jobDetailsEvents: jobDetailsEvents,
 };

@@ -65,7 +65,14 @@ router.route('/resource')
 //   .delete();
 
 router.route('/jobDetail')
-  .post(controller.jobDetail.get)
+  .post(validateJWT, controller.jobDetail.get)
+//   .post() 
+//   .put()
+//   .delete();
+
+router.route('/jobDetailsNotes')
+  .put(validateJWT, controller.jobDetailsNotes.put)
+  .post(validateJWT, controller.jobDetailsEvents.post)
 //   .post() 
 //   .put()
 //   .delete();
