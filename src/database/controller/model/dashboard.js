@@ -5,7 +5,7 @@ export default {
   get: (callback) => {
     const sql = dashboardGet();
     db.query(sql, (err, data) => {
-      console.log(sql);
+      // console.log(sql);
       callback(err, data);
     });      
   },

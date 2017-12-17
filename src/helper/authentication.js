@@ -2,7 +2,7 @@ import { log, debug } from '../';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
-let auth = {};
+const auth = {};
 
 auth.encryptPw = (password, callback) => {
   const saltRounds = 10;
@@ -10,8 +10,10 @@ auth.encryptPw = (password, callback) => {
     bcrypt.hash(password, salt, (err, hash) => {
       callback(err, hash);
     });
+    if (err) {
+      callback(err);
+    }
   });
-  callback(err);
 };
 
 auth.encrypt = (data, callback) => {
@@ -46,15 +48,18 @@ auth.generateJWT = ({ userId }) => {
 
 auth.validateJWT = (req, res, next) => {
   try {
-    // const token = req.headers.authorization;
-    // const secret = process.env.JWT_SECRET;
-    // const decoded = jwt.verify(token.slice(7), secret);
-    // res.set('Authorization', token);
+    const token = req.headers.token;
+    const secret = process.env.JWT_SECRET;
+    const decoded = jwt.verify(token, secret);
+    res.set('token', token);
     console.log('in validate')
+    console.log('token', req.headers.token)
+    console.log('user id', req.headers.id)
     next();
-  } catch (e) {
+  } catch (e) { 
     log('Invalid Token');
-    res.status(204).send('Invalid Token, redirect to login');
+    // res.status(204).send('Invalid Token, redirect to login');
+    // res.redirect('localhost:3000/login');
     next(e);
   }
 };

@@ -5,26 +5,26 @@ import helper from '../helper';
 const TABLE = 'Company';
 
 export default {
-  getAll: (callback) => {
+  getAll: (callback, userId) => {
     const sql = `SELECT * FROM ${TABLE}`;
     db.query(sql, (err, data) => {
       callback(err, data);
     });
   },
-  get: (id, callback) => {
+  get: (id, callback, userId) => {
     const sql = `SELECT * FROM $${TABLE} WHERE id=${id}`;
     db.query(sql, (err, data) => {
       callback(err, data);
     });      
   },
-  query: (queryString, callback) => {
+  query: (queryString, callback, userId) => {
     const sql = `SELECT * FROM ${TABLE} ${helper.where(queryString)}`;
     console.log('sql', sql)
     db.query(sql, (err, data) => {
       callback(err, data);
     }); 
   },
-  post: (data, callback) => {
+  post: (data, callback, userId) => {
     console.log('in company post db', data);
     const sql = "INSERT INTO company (userId, name, description, notes, phone, address1, address2, city, state, zip) VALUES (1, '" + data.companyName + "', '" + data.companyDescription + "', 'na', '" + data.companyPhone + "', '" + data.companyAddress1 + "', '" + data.companyAddress2 + "', '" + data.companyCity + "', '" + data.companyState + "', '" + data.companyZip + "')";
     db.query(sql, (err, results) => {
@@ -32,7 +32,7 @@ export default {
       callback(err, results);
     });
   },
-  searchPost: (data, callback) => {
+  searchPost: (data, callback, userId) => {
     data.jobs.map((job, i) => {
       const check = `SELECT * from company where name = '${job.company.name}'`
       if (job.company.location === undefined) {

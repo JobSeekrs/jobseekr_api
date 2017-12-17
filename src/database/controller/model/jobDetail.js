@@ -5,7 +5,7 @@ export default {
   get: (data, callback) => {
     const sql = jobDetailGet(data.jobId);
     db.query(sql, (err, data) => {
-      console.log(sql);
+      // console.log(sql);
       callback(err, data);
     });      
   },

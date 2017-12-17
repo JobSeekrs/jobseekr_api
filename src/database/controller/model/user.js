@@ -24,15 +24,18 @@ export default {
     }); 
   },
   addOne: (object, callback) => {
+    debug('call addone')
     const cols = Object.keys(object).join(', ');
     const values = `"${Object.values(object).join('", "')}"`;
+    
     const sql = `INSERT INTO ${TABLE} (${cols}) VALUES (${values}) ;`;
+    
     db.query(sql, (err, data) => {
       callback(err, data);
     });
   },
   addMany: (array, callback) => {
-    const cols = Object.keys(array[0]).join(', ');
+    const cols = Object.keys(array[0]).join(', '); 
     const values = `\"${Object.values(object).join('", "')}\"`;
     const sql = `INSERT INTO ${TABLE} (${cols}) VALUES ?;`;
     db.query(sql, [data], (err, data) => {

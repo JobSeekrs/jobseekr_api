@@ -19,17 +19,17 @@ export default {
   },
   query: (queryString, callback) => {
     const sql = `SELECT * FROM ${TABLE} ${helper.where(queryString)}`;
-    console.log('sql', sql)
+    // console.log('sql', sql)
     db.query(sql, (err, data) => {
       callback(err, data);
     }); 
   },
   post: (data, callback) => {
-    console.log('in job post db', data);
+    // console.log('in job post db', data);
     const sql = "INSERT INTO job (companyId, name, description, notes, source, status, priority, deadline, link) VALUES (1, '" + data.jobTitle + "', '" + data.jobDescription + "', '" + data.jobNotes + "', '" + data.jobSource + "', '" + data.jobStatus + "', " + data.jobPriority + ", '" + data.jobDeadline.split('T').join(' ').split('.')[0] + "', '" + data.jobLink + "')";
-    console.log('in jobs db query', sql);
+    // console.log('in jobs db query', sql);
     db.query(sql, (err, results) => {
-      console.log('in db job', results);
+      // console.log('in db job', results);
       callback(err, results);
     });
   },
@@ -44,18 +44,18 @@ export default {
       const sql3 = `INSERT INTO Contact (userId, companyId, firstName, lastName) VALUES (1, (${subquery}), 'N/A', 'N/A')`;
       db.query(check, (err, results) => {
         if (results.length === 0) {
-          console.log('hitting')
+          // console.log('hitting')
           db.query(sql, (err, results) => {
-            console.log('posting job in db', job.title);
+            // console.log('posting job in db', job.title);
             db.query(sql2, (err, results) => {
-              console.log('posting into event', job.title);
+              // console.log('posting into event', job.title);
             });
             db.query(sql3, (err, results) => {
-              console.log('posting into contact', job.title);
+              // console.log('posting into contact', job.title);
             });
           });
         } else {
-          console.log('not posting job in db', job.title);
+          // console.log('not posting job in db', job.title);
         }
       });
     });
