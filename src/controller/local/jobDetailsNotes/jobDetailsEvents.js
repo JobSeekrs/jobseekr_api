@@ -1,6 +1,6 @@
 import db from './../../';
 
-const TYPE = 'jobDetailsEvents';
+const TYPE = 'jobDetailsNotes';
 
 export default  {
   post: (req, res) => {
