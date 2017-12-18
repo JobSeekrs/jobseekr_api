@@ -1,28 +1,33 @@
-import { log, debug } from '../../../'
+import { log, debug } from '../../../';
 import { db } from '../../';
 import helper from '../helper';
 
-const TABLE = 'job';
+const TABLE = 'Job';
 
 export default {
-  getAll: (callback) => {
-    const sql = `SELECT * FROM ${TABLE}`;
+  getAll: (userId, callback) => {
+    const sql = `SELECT * 
+                  FROM ${TABLE}
+                  WHERE userId=${userId}`;
     db.query(sql, (err, data) => {
       callback(err, data);
     });
   },
   get: (id, callback) => {
-    const sql = `SELECT * FROM $${TABLE} WHERE id=${id}`;
+    const sql = `SELECT * 
+                  FROM ${TABLE} 
+                  WHERE id=${id}`;
     db.query(sql, (err, data) => {
       callback(err, data);
-    });      
+    });
   },
   query: (queryString, callback) => {
-    const sql = `SELECT * FROM ${TABLE} ${helper.where(queryString)}`;
-    // console.log('sql', sql)
+    const sql = `SELECT * 
+                  FROM ${TABLE} 
+                  WHERE ${helper.where(queryString)}`;
     db.query(sql, (err, data) => {
       callback(err, data);
-    }); 
+    });
   },
   post: (data, callback) => {
     // console.log('in job post db', data);
@@ -33,7 +38,7 @@ export default {
       callback(err, results);
     });
   },
-  searchPost: (data, callback) => {
+  searchPost: (userId, data, callback) => {
     data.jobs.map((job, i) => {
       job.description = JSON.stringify(job.description.replace(/<(?:.|\n)*?>/gm, ''));
       const subquery = `SELECT id FROM Company WHERE name = '${job.company.name}'`;
@@ -42,20 +47,39 @@ export default {
       const sql = `INSERT INTO Job (companyId, name, description, priority, source, status, link) VALUES ((${subquery}), '${job.title}', ${job.description}, 3, 'Search', 'Will Apply', '${job.apply_url}')`;
       const sql2 = `INSERT INTO Event (jobId, name, notes, timeStamp, type) VALUES ((${subquery2}), 'Created', '', CURRENT_TIMESTAMP(), 'Searched')`;  
       const sql3 = `INSERT INTO Contact (userId, companyId, firstName, lastName) VALUES (1, (${subquery}), 'N/A', 'N/A')`;
+      // const subquery = `SELECT id 
+      //                     FROM Company 
+      //                     WHERE name = '${job.company.name}'`;
+      // const subquery2 = `SELECT id 
+      //                     FROM Job 
+      //                     WHERE name = '${job.title}'`;
+      // const check = `SELECT * 
+      //                 FROM Job 
+      //                 WHERE name = '${job.title}'`;
+      // const sql =
+      //   `INSERT INTO Job (companyId, name, description, priority, source, status, link) 
+      //     VALUES ((${subquery}), '${job.title}', ${job.description}, 3, 
+      //     'Search', 'Will Apply', '${job.apply_url}')`;
+      // const sql2 =
+      //   `INSERT INTO Event (jobId, name, timeStamp, type) 
+      //     VALUES ((${subquery2}), 'Created', CURRENT_TIMESTAMP(), 'Searched')`;
+      // const sql3 =
+      //   `INSERT INTO Contact (userId, companyId, firstName, lastName) 
+      //     VALUES (${userId}, (${subquery}), 'N/A', 'N/A')`;
       db.query(check, (err, results) => {
         if (results.length === 0) {
-          // console.log('hitting')
+          // debug('hitting')
           db.query(sql, (err, results) => {
-            // console.log('posting job in db', job.title);
+            // debug('posting job in db', job.title);
             db.query(sql2, (err, results) => {
-              // console.log('posting into event', job.title);
+              // debug('posting into event', job.title);
             });
             db.query(sql3, (err, results) => {
-              // console.log('posting into contact', job.title);
+              // debug('posting into contact', job.title);
             });
           });
         } else {
-          // console.log('not posting job in db', job.title);
+          // debug('not posting job in db', job.title);
         }
       });
     });

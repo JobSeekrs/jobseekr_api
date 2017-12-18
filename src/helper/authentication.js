@@ -36,31 +36,25 @@ auth.generateJWT = ({ userId }) => {
   const sessionHours = 1;
   const token = {};
   const expiration = Date.now() + (milliscondsToHours.toFixed() * sessionHours);
-  token.accessToken = jwt.sign(
-    {
-      userId,
-      expiration,
-    },
-    process.env.JWT_SECRET,
-  );
-  return token;
+  token.accessToken = jwt.sign({
+    userId,
+    expiration,
+  }, process.env.JWT_SECRET);
+  return token.accessToken;
 };
 
 auth.validateJWT = (req, res, next) => {
   try {
-    const token = req.headers.token;
+    const token = req.headers.authorization;
     const secret = process.env.JWT_SECRET;
     const decoded = jwt.verify(token, secret);
-    res.set('token', token);
-    console.log('in validate')
-    console.log('token', req.headers.token)
-    console.log('user id', req.headers.id)
+    debug('VALIDATED');
     next();
   } catch (e) { 
-    log('Invalid Token');
+    debug('Invalid Token');
     // res.status(204).send('Invalid Token, redirect to login');
-    // res.redirect('localhost:3000/login');
-    next(e);
+    res.redirect('localhost:3000/login');
+    // next(e);
   }
 };
 

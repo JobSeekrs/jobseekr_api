@@ -1,33 +1,38 @@
-import { log, debug } from '../../../'
+import { log, debug } from '../../../';
 import { db } from '../../';
 import helper from '../helper';
 
-const TABLE = 'user';
+const TABLE = 'User';
 
 export default {
-  getAll: (callback) => {
-    const sql = `SELECT * FROM ${TABLE}`;
+  getAll: (userId, callback) => {
+    const sql = `SELECT * 
+                  FROM ${TABLE}
+                  WHERE userId=${userId}`;
     db.query(sql, (err, data) => {
       callback(err, data);
     });
   },
   get: (id, callback) => {
-    const sql = `SELECT * FROM $${TABLE} WHERE id=${id}`;
+    const sql = `SELECT * 
+                  FROM ${TABLE} 
+                  WHERE id=${id}`;
     db.query(sql, (err, data) => {
       callback(err, data);
-    });      
+    });
   },
   query: (queryString, callback) => {
-    const sql = `SELECT * FROM ${TABLE} ${helper.where(queryString)}`;
+    const sql = `SELECT * 
+                  FROM ${TABLE} 
+                  WHERE ${helper.where(queryString)}`;
     db.query(sql, (err, data) => {
       callback(err, data);
-    }); 
+    });
   },
   addOne: (object, callback) => {
     debug('call addone')
     const cols = Object.keys(object).join(', ');
     const values = `"${Object.values(object).join('", "')}"`;
-    
     const sql = `INSERT INTO ${TABLE} (${cols}) VALUES (${values}) ;`;
     
     db.query(sql, (err, data) => {

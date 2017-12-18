@@ -7,7 +7,7 @@ const TYPE = 'user';
 export default {
   get: (req, res) => {
     if (Object.keys(req.query).length === 0) {
-      db.model[TYPE].getAll((err, data) => {
+      db.model[TYPE].getAll(req.headers.userid, (err, data) => {
         res.status(200).send(data);
       });
     } else if (req.query.id && Object.keys(req.query).length === 1) {
@@ -21,6 +21,7 @@ export default {
     }
   },
   login: (req, res) => {
+    debug('in login')
     const b64 = req.headers.authorization.slice(6);
     const creds = Buffer.from(b64, 'base64').toString().split(':');
     const emailLogin = creds[0];
@@ -33,10 +34,19 @@ export default {
           if (isValid) {
             const userId = rows[0].id;
             const token = auth.generateJWT({ userId, emailLogin });
-            res.set({ Authorization: `Bearer ${token}` });
-            return res.status(200).end();
+            // res.set({
+            //   Authorization: `${token}`,
+            //   UserId: userId,
+            // });
+            debug('Valid Login');
+            res.status(200).send({
+              Authorization: `${token}`,
+              UserId: userId,
+            });
+          } else {
+            debug('Invalid Login');
+            res.status(401).send('Invalid Login Password');
           }
-          return res.status(401).send('Invalid Login Password');
         });
       }
     });
@@ -55,7 +65,7 @@ export default {
           };
           db.model.user.addOne(user, (err, rows) => {
             if (err) {
-              res.status(401).send('Failed to add user' + JSON.stringify(err));
+              res.status(401).send('Failed to add user');
             } else {
               res.status(200).send('User account created');
             }
