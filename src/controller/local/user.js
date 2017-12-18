@@ -21,7 +21,7 @@ export default {
     }
   },
   login: (req, res) => {
-    debug('in login')
+    debug('in login');
     const b64 = req.headers.authorization.slice(6);
     const creds = Buffer.from(b64, 'base64').toString().split(':');
     const emailLogin = creds[0];

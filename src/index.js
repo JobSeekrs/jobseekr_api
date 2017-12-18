@@ -26,13 +26,13 @@ app.use(function(req, res, next) {
 app.use('/', Router);
 
 log('-------------------------------');
-log(`- Starting API server...`);
+log('- Starting API server...');
 app.listen(port, (err) => {
-  if(err) {
+  if (err) {
     log('** FATAL: Error starting Express Server **');
   } else {
     log(`  ...Express serving port ${port}\n`);
-    initializeDb(err => {
+    initializeDb((err) => {
       if (err) {
         log('** FATAL: Error initializing DB:', err);
       } else {
