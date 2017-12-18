@@ -21,8 +21,10 @@ export default {
     }
   },
   login: (req, res) => {
-    const { emailLogin } = req.body;
-    const { password } = req.body;
+    const b64 = req.headers.authorization.slice(6);
+    const creds = Buffer.from(b64, 'base64').toString().split(':');
+    const emailLogin = creds[0];
+    const password = creds[1];
     db.model.user.query({ emailLogin }, (err, rows) => {
       if (!rows.length) {
         res.status(401).send('Invalid Login Email');
@@ -31,7 +33,8 @@ export default {
           if (isValid) {
             const userId = rows[0].id;
             const token = auth.generateJWT({ userId, emailLogin });
-            return res.status(200).send({ userId, token });
+            res.set({ Authorization: `Bearer ${token}` });
+            return res.status(200).end();
           }
           return res.status(401).send('Invalid Login Password');
         });
