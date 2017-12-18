@@ -1,9 +1,9 @@
-import { log, debug } from '../../';
+import { log, debug } from '../../'
 import db from '../';
 
 const TYPE = 'resource';
 
-export default {
+export default  {
   get: (req, res) => {
     if (Object.keys(req.query).length === 0) {
       db.model[TYPE].getAll(req.headers.userid, (err, data) => {
