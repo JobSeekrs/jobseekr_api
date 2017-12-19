@@ -55,8 +55,13 @@ router.route('/dashboard')
 router.route('/event')
   .get(validateJWT, controller.event.get)
   .post(validateJWT, controller.event.post);
-// .put()
 // .delete();
+
+router.route('/event/activityLog')
+  .post(validateJWT, controller.event.activityLogGet);
+
+router.route('/event/activityLogPost')
+  .post(validateJWT, controller.event.activityLogPost);
 
 router.route('/resource')
   .get(validateJWT, controller.resource.get);
@@ -65,14 +70,14 @@ router.route('/resource')
 //   .delete();
 
 router.route('/jobDetail')
-  .post(validateJWT, controller.jobDetail.get)
+  .post(validateJWT, controller.jobDetail.get);
 //   .post() 
 //   .put()
 //   .delete();
 
 router.route('/jobDetailsNotes')
   .put(validateJWT, controller.jobDetailsNotes.put)
-  .post(validateJWT, controller.jobDetailsEvents.post)
+  .post(validateJWT, controller.jobDetailsEvents.post);
 //   .post() 
 //   .put()
 //   .delete();

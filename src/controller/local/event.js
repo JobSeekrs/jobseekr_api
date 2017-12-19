@@ -23,5 +23,15 @@ export default  {
     db.model[TYPE].post(req.body, (err, data) => {
       res.status(200).send(data);
     });
-  }
+  },
+  activityLogGet: (req, res) => {
+    db.model[TYPE].activityLogGet(req.body, (err, data) => {
+      res.status(200).send(data);
+    });
+  },
+  activityLogPost: (req, res) => {
+    db.model[TYPE].activityLogPost(req.body, (err, data) => {
+      res.status(200).send(data);
+    });
+  },
 };
