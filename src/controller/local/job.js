@@ -25,7 +25,7 @@ export default  {
     });
   },
   searchPost: (req, res) => {
-    db.model[TYPE].searchPost(req.body, (err, result) => {
+    db.model[TYPE].searchPost(req.query.id, req.body, (err, result) => {
       if (err) {
         console.log(err);
       }
