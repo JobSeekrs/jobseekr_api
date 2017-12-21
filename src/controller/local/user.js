@@ -21,40 +21,41 @@ export default {
     }
   },
   login: (req, res) => {
-    debug('in login')
-    const b64 = req.headers.authorization.slice(6);
-    const creds = Buffer.from(b64, 'base64').toString().split(':');
-    const emailLogin = creds[0];
-    const password = creds[1];
-    db.model.user.query({ emailLogin }, (err, rows) => {
-      if (!rows.length) {
-        res.status(401).send('Invalid Login Email');
-      } else {
-        auth.isValidPw(password, rows[0].password, (err, isValid) => {
-          if (isValid) {
-            const userId = rows[0].id;
-            const token = auth.generateJWT({ userId, emailLogin });
-            // res.set({
-            //   Authorization: `${token}`,
-            //   UserId: userId,
-            // });
-            debug('Valid Login');
-            res.status(200).send({
-              Authorization: `${token}`,
-              UserId: userId,
-            });
-          } else {
-            debug('Invalid Login');
-            res.status(401).send('Invalid Login Password');
-          }
-        });
-      }
-    });
+    try {
+      debug('in login')
+      const b64 = req.headers.authorization.slice(6);
+      const creds = Buffer.from(b64, 'base64').toString().split(':');
+      const emailLogin = creds[0];
+      const password = creds[1];
+      db.model.user.query({ emailLogin }, (err, rows) => {
+        if (!err && !rows.length) {
+          res.status(204).send('Invalid Login Email');
+        } else {
+          auth.isValidPw(password, rows[0].password, (err, isValid) => {
+            if (isValid) {
+              const userId = rows[0].id;
+              const token = auth.generateJWT({ userId, emailLogin });
+              debug('Valid Login');
+              res.status(200).send({
+                token: `${token}`,
+                userid: userId,
+              });
+            } else {
+              debug('Invalid Login');
+              res.status(204).send('Invalid Login Password');
+            }
+          });
+        }
+      });
+    } catch (e) {
+      debug('Invalid Login');
+      res.status(204).send('Invalid Login Password');
+    }
   },
   signup: (req, res) => {
     db.model.user.query({ emailLogin: req.body.emailLogin }, (err, rows) => {
       if (rows.length) {
-        res.status(401).send('Email Login already exists');
+        res.status(204).send('Email Login already exists');
       } else {
         auth.encryptPw(req.body.password, (err, pwHash) => {
           const user = {
@@ -65,7 +66,7 @@ export default {
           };
           db.model.user.addOne(user, (err, rows) => {
             if (err) {
-              res.status(401).send('Failed to add user');
+              res.status(204).send('Failed to add user');
             } else {
               res.status(200).send('User account created');
             }

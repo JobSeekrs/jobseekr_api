@@ -4,6 +4,26 @@ import bcrypt from 'bcrypt';
 
 const auth = {};
 
+
+auth.validateJWT = (req, res, next) => {
+  try {
+    // const token = req.headers.authorization;
+    // const secret = process.env.JWT_SECRET;
+    // const decoded = jwt.verify(token, secret);
+    // debug('VALIDATED');
+    debug('IN VALIDATE JWT headers, userid:', req.headers.userid, req.headers.token.slice(0,10))
+    debug('IN VALIDATE JWT headers ', req.headers)
+    if (!req.headers.userid) {
+      debug(req.headers)
+    }
+    next();
+  } catch (e) { 
+    debug('Invalid Token');
+    // res.status(204).send('Invalid Token, redirect to login');
+    // res.redirect('localhost:3000/login');
+    // next(e);
+  }
+};
 auth.encryptPw = (password, callback) => {
   const saltRounds = 10;
   bcrypt.genSalt(saltRounds, (err, salt) => {
@@ -41,21 +61,6 @@ auth.generateJWT = ({ userId }) => {
     expiration,
   }, process.env.JWT_SECRET);
   return token.accessToken;
-};
-
-auth.validateJWT = (req, res, next) => {
-  try {
-    // const token = req.headers.authorization;
-    // const secret = process.env.JWT_SECRET;
-    // const decoded = jwt.verify(token, secret);
-    // debug('VALIDATED');
-    next();
-  } catch (e) { 
-    debug('Invalid Token');
-    // res.status(204).send('Invalid Token, redirect to login');
-    res.redirect('localhost:3000/login');
-    // next(e);
-  }
 };
 
 export default auth;

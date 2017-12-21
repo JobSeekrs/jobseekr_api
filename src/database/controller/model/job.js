@@ -39,7 +39,7 @@ export default {
     });
   },
   searchPost: (userId, data, callback) => {
-    debug('USER ID', userId);
+    debug('USER ID in DB search post', userId);
     // debug('DATA', data)
     data.jobs.map((job, i) => {
       job.description = JSON.stringify(job.description.replace(/<(?:.|\n)*?>/gm, ''));

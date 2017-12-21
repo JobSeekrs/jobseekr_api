@@ -30,7 +30,6 @@ export default {
     });
   },
   addOne: (object, callback) => {
-    debug('call addone')
     const cols = Object.keys(object).join(', ');
     const values = `"${Object.values(object).join('", "')}"`;
     const sql = `INSERT INTO ${TABLE} (${cols}) VALUES (${values}) ;`;

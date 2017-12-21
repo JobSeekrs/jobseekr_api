@@ -6,7 +6,7 @@ const TYPE = 'job';
 export default  {
   get: (req, res) => {
     if (Object.keys(req.query).length === 0) {
-      db.model[TYPE].getAll((err, data) => {
+      db.model[TYPE].getAll(req.headers.userid,(err, data) => {
         res.status(200).send(data);
       });
     } else if (req.query.id && Object.keys(req.query).length === 1) {
@@ -25,7 +25,7 @@ export default  {
     });
   },
   searchPost: (req, res) => {
-    db.model[TYPE].searchPost(req.query.id, req.body, (err, result) => {
+    db.model[TYPE].searchPost(req.headers.userid, req.body, (err, result) => {
       if (err) {
         console.log(err);
       }

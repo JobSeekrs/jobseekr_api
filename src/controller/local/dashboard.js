@@ -1,13 +1,14 @@
+import { log, debug } from '../../';
 import db from './../';
 
 const TYPE = 'dashboard';
 
 export default {
+
   get: (req, res) => {
-    console.log('in db dashboard')
-    console.log('headers', req.headers)
+		debug('DASHBOARD controller - headers user id', req.headers.userid)
     db.model[TYPE].get(req.headers.userid, (err, data) => {
-      res.status(200).send(JSON.stringify(data));
+      res.status(200).send(data);
     });
   },
 };
