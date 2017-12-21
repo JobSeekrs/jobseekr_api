@@ -45,6 +45,7 @@ export default {
   },
   searchPost: (userId, data, callback) => {
     data.jobs.map((job, i) => {
+      console.log('this is userId', userId);
       const check = `SELECT * from company where name = '${job.company.name}'`;
       if (job.company.location === undefined) {
         job.company.location = {
