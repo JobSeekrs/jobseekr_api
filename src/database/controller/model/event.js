@@ -36,6 +36,24 @@ export default {
         VALUES (${data.jobId}, ${data.contactId}, 
           '${data.eventName}', '${data.eventType}', ${Date.now()})`;
     db.query(sql, (err, results) => {
+      console.log('in db event', results);
+      callback(err, results);
+    });
+  },
+  activityLogGet: (data, callback) => {
+    const sql = `SELECT * from event WHERE jobId = ${data.jobId}`;
+    db.query(sql, (err, results) => {
+      console.log('getting all data from event table for activity table', results);
+      callback(err, results);
+    });
+  },
+  activityLogPost: (data, callback) => {
+    const dateTime = data.timeStamp.split('T').join(' ').split('.')[0];
+    const sql = `
+      INSERT INTO event (jobId, name, notes, type, timeStamp)
+      VALUES (${data.jobId}, '${data.name}', '${data.notes}', '${data.type}', '${dateTime}')
+      `;
+    db.query(sql, (err, results) => {
       debug('in db event', results);
       callback(err, results);
     });

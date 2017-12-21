@@ -45,6 +45,7 @@ export default {
   },
   searchPost: (userId, data, callback) => {
     data.jobs.map((job, i) => {
+      console.log('this is userId', userId);
       const check = `SELECT * from company where name = '${job.company.name}'`;
       if (job.company.location === undefined) {
         job.company.location = {
@@ -52,14 +53,12 @@ export default {
           state: null,
         };
       }
-
       const sql =
         `INSERT INTO ${TABLE} (userId, name, city, state) 
           VALUES (${userId}, '${job.company.name}', 
               '${job.company.location.city}', 
               '${job.company.location.state}')`;
-
-      debug('company post sql', sql)
+      debug('company post sql', sql);
       db.query(check, (err, results) => {
         if (results.length === 0) {
           db.query(sql, (err, results) => {

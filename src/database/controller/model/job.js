@@ -43,31 +43,13 @@ export default {
     // debug('DATA', data)
     data.jobs.map((job, i) => {
       job.description = JSON.stringify(job.description.replace(/<(?:.|\n)*?>/gm, ''));
+      console.log('this is the job', job)
       const subquery = `SELECT id FROM Company WHERE name = '${job.company.name}'`;
       const subquery2 = `SELECT id from Job WHERE name = '${job.title}'`;
       const check =  `SELECT * FROM Job WHERE name = '${job.title}'`;
-      const sql = `INSERT INTO Job (companyId, name, description, priority, source, status, link) VALUES ((${subquery}), '${job.title}', ${job.description}, 3, 'Search', 'Will Apply', '${job.apply_url}')`;
+      const sql = `INSERT INTO Job (companyId, name, description, priority, notes, source, status, link) VALUES ((${subquery}), '${job.title}', ${job.description}, 3, '', 'Search', 'Will Apply', '${job.apply_url}')`;
       const sql2 = `INSERT INTO Event (jobId, name, notes, timeStamp, type) VALUES ((${subquery2}), 'Created', '', CURRENT_TIMESTAMP(), 'Searched')`;  
-      const sql3 = `INSERT INTO Contact (userId, companyId, firstName, lastName) VALUES (1, (${subquery}), 'N/A', 'N/A')`;
-      // const subquery = `SELECT id 
-      //                     FROM Company 
-      //                     WHERE name = '${job.company.name}'`;
-      // const subquery2 = `SELECT id 
-      //                     FROM Job 
-      //                     WHERE name = '${job.title}'`;
-      // const check = `SELECT * 
-      //                 FROM Job 
-      //                 WHERE name = '${job.title}'`;
-      // const sql =
-      //   `INSERT INTO Job (companyId, name, description, priority, source, status, link) 
-      //     VALUES ((${subquery}), '${job.title}', ${job.description}, 3, 
-      //     'Search', 'Will Apply', '${job.apply_url}')`;
-      // const sql2 =
-      //   `INSERT INTO Event (jobId, name, timeStamp, type) 
-      //     VALUES ((${subquery2}), 'Created', CURRENT_TIMESTAMP(), 'Searched')`;
-      // const sql3 =
-      //   `INSERT INTO Contact (userId, companyId, firstName, lastName) 
-      //     VALUES (${userId}, (${subquery}), 'N/A', 'N/A')`;
+      const sql3 = `INSERT INTO Contact (userId, companyId, firstName, lastName) VALUES (${userId}, (${subquery}), 'N/A', 'N/A')`;
       db.query(check, (err, results) => {
         if (results.length === 0) {
           // debug('hitting')
