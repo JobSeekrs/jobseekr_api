@@ -29,7 +29,6 @@ export default {
       callback(err, data);
     });
   },
-<<<<<<< HEAD
   post: (userId, companyId, data, callback) => {
     debug('in contact post db', data);
     const sql =
@@ -38,11 +37,6 @@ export default {
         VALUES (${userId}, ${companyId}, '${data.contactFirstName}', 
           '${data.contactLastName}', '${data.contactTitle}' 'na', 
           '${data.contactEmail}', '${data.contactPhone}')`;
-=======
-  post: (data, callback) => {
-    console.log('in contact post db', data);
-    const sql = "INSERT INTO contact (userId, companyId, firstName, lastName, title, notes, email, phone) VALUES (1, " + data.companyId + ", '" + data.contactFirstName + "', '" + data.contactLastName + "', '" + data.contactTitle + "', 'na', '" + data.contactEmail + "', '" + data.contactPhone + "')";
->>>>>>> [fix]
     db.query(sql, (err, results) => {
       debug('in db contact', results);
       callback(err, results);
