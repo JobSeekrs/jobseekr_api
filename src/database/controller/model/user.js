@@ -29,6 +29,17 @@ export default {
       callback(err, data);
     });
   },
+
+  // addOne: (user, callback) => {
+  //   const sql = helper.insertOne(user);
+  //   db.query(sql, (err, data) => {
+  //     callback(err, data);
+  //   });
+  // },
+
+
+
+
   addOne: (object, callback) => {
     const cols = Object.keys(object).join(', ');
     const values = `"${Object.values(object).join('", "')}"`;

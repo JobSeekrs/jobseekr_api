@@ -47,11 +47,11 @@ CREATE TABLE `Event` (
 	`id` INT NOT NULL AUTO_INCREMENT,
 	`jobId` INT NOT NULL,
 	`contactId` INT,
-	`name` VARCHAR(255) NOT NULL,
+	`name` VARCHAR(255),
 	`notes` VARCHAR(10000),
 	`type` VARCHAR(255) NOT NULL,
 	`dueDate` DATETIME,
-	`timeStamp` DATETIME NOT NULL,
+	`timeStamp` DATETIME,
 	`notifyOn` DATETIME,
 	`notificationType` VARCHAR(255),
 	PRIMARY KEY (`id`)

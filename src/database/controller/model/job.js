@@ -87,4 +87,67 @@ export default {
     });
     callback('finished');
   },
+
+  manualAdd: (userId, data, callback) => {
+
+    debug('USERID', userId);
+    debug('DATA', data);
+
+    const postData = data;
+    let sql;
+
+    try {
+      db.beginTransaction((err) => {
+        if (err) throw err;
+
+        postData.company.userId = userId;
+        sql = helper.insertOne('company', postData.company);
+        db.query(sql, (err, company) => {
+          if (err) throw err;
+          debug('company insert', company, 'ERR', err);
+
+          postData.job.companyId = company.insertId;
+          sql = helper.insertOne('job', postData.job);
+          db.query(sql, (err, job) => {
+            if (err) throw err;
+            debug('job insert', job, 'ERR', err);
+
+            postData.contact.userId = userId;
+            postData.contact.companyId = company.insertId;
+            sql = helper.insertOne('contact', postData.contact);
+            db.query(sql, (err, contact) => {
+              if (err) throw err;
+              debug('contact insert', contact, 'ERR', err);
+
+              postData.event.jobId = job.insertId;
+              postData.event.contactId = contact.insertId;
+              sql = helper.insertOne('event', postData.event);
+              db.query(sql, (err, event) => {
+                if (err) throw err;
+                debug('event insert', event, 'ERR', err);
+
+                db.commit((err, msg) => {
+                  if (err) throw err;
+                  debug('COMMIT', err, msg);
+                  callback(null, true);
+                });
+              });
+            });
+          });
+        });
+      });
+    } catch (err) {
+      db.rollback((err, msg) => {
+        debug('ROLLBACK', err, msg);
+        callback(err);
+      });
+    }
+  },
 };
+
+
+
+
+
+
+

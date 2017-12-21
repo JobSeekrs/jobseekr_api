@@ -17,8 +17,8 @@ router.route('/github')
   .post(validateJWT, controller.github.post);
 
 router.route('/user')
-  .get(validateJWT, controller.user.get);
-// .post()
+  .get(validateJWT, controller.user.get)
+  // .post(validateJWT, controller.user.addOne);
 // .put()
 // .delete();
 
@@ -37,11 +37,16 @@ router.route('/contact')
 //   .put()
 //   .delete();
 
+router.route('/job/manual')
+  .post(validateJWT, controller.job.manualPost);
+
 router.route('/job')
   .get(validateJWT, controller.job.get)
   .post(validateJWT, controller.job.post);
 //   .put()
 //   .delete();
+
+
 
 router.route('/job/search')
 .post(controller.job.searchPost);

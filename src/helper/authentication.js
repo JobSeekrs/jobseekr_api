@@ -10,12 +10,12 @@ auth.validateJWT = (req, res, next) => {
     // const token = req.headers.authorization;
     // const secret = process.env.JWT_SECRET;
     // const decoded = jwt.verify(token, secret);
-    // debug('VALIDATED');
-    debug('IN VALIDATE JWT headers, userid:', req.headers.userid, req.headers.token.slice(0,10))
-    debug('IN VALIDATE JWT headers ', req.headers)
-    if (!req.headers.userid) {
-      debug(req.headers)
-    }
+    debug('VALIDATED');
+    // debug('IN VALIDATE JWT headers, userid:', req.headers.userid, req.headers.token.slice(0,10))
+    // debug('IN VALIDATE JWT headers ', req.headers)
+    // if (!req.headers.userid) {
+    //   debug(req.headers)
+    // }
     next();
   } catch (e) { 
     debug('Invalid Token');

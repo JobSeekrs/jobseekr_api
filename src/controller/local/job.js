@@ -31,5 +31,14 @@ export default  {
       }
       res.status(200).send('POSTED JOB FROM SEARCH INTO DB');
     })
+  },
+  manualPost: (req, res) => {
+    debug('IN MANUAL POST')
+    db.model.job.manualAdd(req.headers.userid, req.body, (err, result) => {
+      if (err) {
+        res.status(400).send('COULD NOT ENTER JOB IN DB');
+      }
+      res.status(200).send('POSTED MANUAL JOB ENTRY INTO DB');
+    })
   }
 };

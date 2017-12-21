@@ -53,6 +53,7 @@ export default {
     }
   },
   signup: (req, res) => {
+    console.log(JSON.stringify(req.body))
     db.model.user.query({ emailLogin: req.body.emailLogin }, (err, rows) => {
       if (rows.length) {
         res.status(204).send('Email Login already exists');
