@@ -49,7 +49,10 @@ export default {
   },
   activityLogPost: (data, callback) => {
     const dateTime = data.timeStamp.split('T').join(' ').split('.')[0];
-    const sql = `INSERT INTO event (jobId, name, notes, type, timeStamp) VALUES (${data.jobId}, '${data.name}', '${data.notes}', '${data.type}', '${dateTime}')`;
+    const sql = `
+      INSERT INTO event (jobId, name, notes, type, timeStamp)
+      VALUES (${data.jobId}, '${data.name}', '${data.notes}', '${data.type}', '${dateTime}')
+      `;
     db.query(sql, (err, results) => {
       debug('in db event', results);
       callback(err, results);
