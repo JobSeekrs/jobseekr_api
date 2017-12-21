@@ -1,27 +1,32 @@
-import { log, debug } from '../../../'
+import { log, debug } from '../../../';
 import { db } from '../../';
 import helper from '../helper';
 
-const TABLE = 'resource';
+const TABLE = 'Resource';
 
 export default {
-  getAll: (callback) => {
-    const sql = `SELECT * FROM ${TABLE}`;
+  getAll: (userId, callback) => {
+    const sql = `SELECT * 
+                  FROM ${TABLE}
+                  WHERE userId=${userId}`;
     db.query(sql, (err, data) => {
       callback(err, data);
     });
   },
   get: (id, callback) => {
-    const sql = `SELECT * FROM $${TABLE} WHERE id=${id}`;
+    const sql = `SELECT * 
+                  FROM ${TABLE} 
+                  WHERE id=${id}`;
     db.query(sql, (err, data) => {
       callback(err, data);
-    });      
+    });
   },
   query: (queryString, callback) => {
-    const sql = `SELECT * FROM ${TABLE} ${helper.where(queryString)}`;
-    console.log('sql', sql)
+    const sql = `SELECT * 
+                  FROM ${TABLE} 
+                  WHERE ${helper.where(queryString)}`;
     db.query(sql, (err, data) => {
       callback(err, data);
-    }); 
+    });
   },
 };
