@@ -42,7 +42,7 @@ const insert = (table, cols, data) => {
 export const seedDb = (callback) => {
   log('- Checking for data...');
   try {
-    db.query('select count(*) as count from user', (err, msg) => {
+    db.query('select count(*) as count from User', (err, msg) => {
       if (msg[0].count === 0) {
         log('  ...No data found, seeding DB...');
         insert('User', users.cols.join(','), users.data);

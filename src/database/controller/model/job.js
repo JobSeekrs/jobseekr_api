@@ -101,6 +101,7 @@ export default {
               if (err) throw err;
               debug('contact insert', contact, 'ERR', err);
 
+              postData.event.timeStamp = helper.getSqlDateTime(new Date());
               postData.event.jobId = job.insertId;
               postData.event.contactId = contact.insertId;
               sql = helper.insertOne('event', postData.event);
