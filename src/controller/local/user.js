@@ -28,8 +28,8 @@ export default {
       const emailLogin = creds[0];
       const password = creds[1];
       db.model.user.query({ emailLogin }, (err, rows) => {
-        if (!err && !rows.length) {
-          res.status(204).send('Invalid Login Email');
+        if (!rows.length) {
+          res.status(401).send('Invalid Login Email');
         } else {
           auth.isValidPw(password, rows[0].password, (err, isValid) => {
             if (isValid) {
@@ -42,21 +42,21 @@ export default {
               });
             } else {
               debug('Invalid Login');
-              res.status(204).send('Invalid Login Password');
+              res.status(401).send('Invalid Login Password');
             }
           });
         }
       });
     } catch (e) {
       debug('Invalid Login');
-      res.status(204).send('Invalid Login Password');
+      res.status(401).send('Invalid Login Password');
     }
   },
   signup: (req, res) => {
     console.log(JSON.stringify(req.body))
     db.model.user.query({ emailLogin: req.body.emailLogin }, (err, rows) => {
       if (rows.length) {
-        res.status(204).send('Email Login already exists');
+        res.status(401).send('Email Login already exists');
       } else {
         auth.encryptPw(req.body.password, (err, pwHash) => {
           const user = {
@@ -67,7 +67,7 @@ export default {
           };
           db.model.user.addOne(user, (err, rows) => {
             if (err) {
-              res.status(204).send('Failed to add user');
+              res.status(401).send('Failed to add user');
             } else {
               res.status(200).send('User account created');
             }

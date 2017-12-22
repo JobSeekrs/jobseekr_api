@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon src --exec babel-node",
-    "build": "babel src -d dist",
+    "build": "babel src --out-dir dist --source-maps inline --copy-files",
     "wipe-db": "mysql -u root < src/database/init/schema.sql",
     "server": "node dist",
     "test": "jest --coverage",
@@ -33,6 +33,7 @@
     "sequelize": "^4.23.4"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-eslint": "^8.0.3",
     "babel-preset-env": "^1.6.1",
     "eslint": "^4.12.1",
