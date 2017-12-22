@@ -32,7 +32,7 @@ export default {
   post: (userId, companyId, data, callback) => {
     debug('in contact post db', data);
     const sql =
-      `INSERT INTO contact (userId, companyId, firstName, 
+      `INSERT INTO Contact (userId, companyId, firstName, 
           lastName, title, notes, email, phone) 
         VALUES (${userId}, ${companyId}, '${data.contactFirstName}', 
           '${data.contactLastName}', '${data.contactTitle}' 'na', 

@@ -31,7 +31,7 @@ export default {
   },
   post: (data, callback) => {
     // console.log('in job post db', data);
-    const sql = "INSERT INTO job (companyId, name, description, notes, source, status, priority, deadline, link) VALUES (1, '" + data.jobTitle + "', '" + data.jobDescription + "', '" + data.jobNotes + "', '" + data.jobSource + "', '" + data.jobStatus + "', " + data.jobPriority + ", '" + data.jobDeadline.split('T').join(' ').split('.')[0] + "', '" + data.jobLink + "')";
+    const sql = "INSERT INTO Job (companyId, name, description, notes, source, status, priority, deadline, link) VALUES (1, '" + data.jobTitle + "', '" + data.jobDescription + "', '" + data.jobNotes + "', '" + data.jobSource + "', '" + data.jobStatus + "', " + data.jobPriority + ", '" + data.jobDeadline.split('T').join(' ').split('.')[0] + "', '" + data.jobLink + "')";
     // console.log('in jobs db query', sql);
     db.query(sql, (err, results) => {
       // console.log('in db job', results);
@@ -83,20 +83,20 @@ export default {
         if (err) throw err;
 
         postData.company.userId = userId;
-        sql = helper.insertOne('company', postData.company);
+        sql = helper.insertOne('Company', postData.company);
         db.query(sql, (err, company) => {
           if (err) throw err;
           debug('company insert', company, 'ERR', err);
 
           postData.job.companyId = company.insertId;
-          sql = helper.insertOne('job', postData.job);
+          sql = helper.insertOne('Job', postData.job);
           db.query(sql, (err, job) => {
             if (err) throw err;
             debug('job insert', job, 'ERR', err);
 
             postData.contact.userId = userId;
             postData.contact.companyId = company.insertId;
-            sql = helper.insertOne('contact', postData.contact);
+            sql = helper.insertOne('Contact', postData.contact);
             db.query(sql, (err, contact) => {
               if (err) throw err;
               debug('contact insert', contact, 'ERR', err);
@@ -104,7 +104,7 @@ export default {
               postData.event.timeStamp = helper.getSqlDateTime(new Date());
               postData.event.jobId = job.insertId;
               postData.event.contactId = contact.insertId;
-              sql = helper.insertOne('event', postData.event);
+              sql = helper.insertOne('Event', postData.event);
               db.query(sql, (err, event) => {
                 if (err) throw err;
                 debug('event insert', event, 'ERR', err);
